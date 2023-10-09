@@ -3,5 +3,6 @@ export type Text = {
   fontSize: number;
   fontWeight: number;
   color: string;
+  shadows?: boolean;
   lineHeight?: number;
 };

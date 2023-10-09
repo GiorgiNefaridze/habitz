@@ -1,0 +1,16 @@
+import styled from "styled-components/native";
+
+import { Button } from "./Types";
+
+export const Btn = styled.TouchableOpacity<Button>`
+  width: ${({ width }) => width};
+  border-top-left-radius: ${({ borderRadius }) => borderRadius};
+  border-top-right-radius: ${({ borderRadius }) => borderRadius};
+  border-bottom-left-radius: ${({ borderRadius }) => borderRadius};
+  border-bottom-right-radius: ${({ borderRadius }) => borderRadius};
+  padding-top: ${({ padding }) => padding};
+  padding-bottom: ${({ padding }) => padding};
+  background-color: ${({ backgroundColor }) => backgroundColor};
+  align-items: center;
+  column-gap: 10;
+`;
