@@ -11,6 +11,8 @@ export const Btn = styled.TouchableOpacity<Button>`
   padding-top: ${({ padding }) => padding};
   padding-bottom: ${({ padding }) => padding};
   background-color: ${({ backgroundColor }) => backgroundColor};
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
   column-gap: 10;
 `;

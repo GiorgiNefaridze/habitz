@@ -1,11 +1,23 @@
+import { useEffect } from "react";
+import { loadAsync } from "expo-font";
+
 import { Heading } from "./Text.style";
 import { Text as TextType } from "./Types";
 
 const Text = (props: TextType) => {
   const { text, shadows, ...styleProps } = props;
+
+  useEffect(() => {
+    (async () => {
+      await loadAsync({
+        Gabarito: require("../../assets/fonts/Gabarito-VariableFont_wght.ttf"),
+      });
+    })();
+  }, []);
+
   return (
     <Heading
-      style={
+      style={[
         shadows && {
           shadowColor: "#000",
           textShadowOffset: {
@@ -15,8 +27,9 @@ const Text = (props: TextType) => {
           textShadowRadius: 2.62,
 
           elevation: 1,
-        }
-      }
+        },
+        { fontFamily: "Gabarito" },
+      ]}
       {...styleProps}
     >
       {text}

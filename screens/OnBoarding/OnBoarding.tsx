@@ -32,14 +32,14 @@ const OnBoarding: FC<OnBoardingType> = ({ navigation }) => {
             fontSize={40}
             fontWeight={900}
             text="Create Good Habits"
-            lineHeight={45}
+            lineHeight={48}
             shadows
           />
           <Text
             color="white"
             fontSize={15}
             fontWeight={300}
-            lineHeight={17}
+            lineHeight={18}
             text="Change your life by slowly adding new healty habits and sticking to them."
           />
         </View>
