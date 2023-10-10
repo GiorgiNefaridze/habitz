@@ -5,9 +5,24 @@ import SignIn from "./screens/SignIn/SignIn";
 import Home from "./screens/Home/Home";
 
 export const Routes = {
-  OnBoarding: OnBoarding,
-  SignUp: SignUp,
-  SignIn: SignIn,
-  Home: Home,
-  CreateAccount: CreateAccount,
+  OnBoarding: {
+    path: "OnBoarding",
+    component: OnBoarding,
+  },
+  SignUp: {
+    path: "SignUp",
+    component: SignUp,
+  },
+  SignIn: {
+    path: "SignIn",
+    component: SignIn,
+  },
+  Home: {
+    path: "Home",
+    component: Home,
+  },
+  CreateAccount: {
+    path: "CreateAccount",
+    component: CreateAccount,
+  },
 };

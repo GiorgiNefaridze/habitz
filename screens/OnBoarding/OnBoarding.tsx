@@ -15,7 +15,7 @@ const screenWidth: number = Dimensions.get("screen").width;
 
 const OnBoarding: FC<NavigationType> = memo(({ navigation: { navigate } }) => {
   const handleNavigate = () => {
-    navigate(Routes.SignIn.toString());
+    navigate(Routes.SignIn.path);
   };
 
   return (

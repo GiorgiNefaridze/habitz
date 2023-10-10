@@ -21,6 +21,8 @@ const SignIn: FC<NavigationType> = memo(({ navigation: { goBack } }) => {
     goBack();
   };
 
+  const handleLogin = () => {};
+
   return (
     <SafeAreaView
       style={{
@@ -82,7 +84,7 @@ const SignIn: FC<NavigationType> = memo(({ navigation: { goBack } }) => {
         width={screenWidth - 2 * paddingHorizontal}
         borderRadius={20}
         shadows
-        onPress={() => {}}
+        onPress={handleLogin}
         backgroundColor={colors.primary}
         padding={10}
       >
