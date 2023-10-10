@@ -13,7 +13,7 @@ import { OnBoardingWrapper } from "./OnBoarding.style";
 
 const screenWidth: number = Dimensions.get("screen").width;
 
-const OnBoarding: FC<OnBoardingType> = ({ navigation: { navigate } }) => {
+const OnBoarding: FC<OnBoardingType> = memo(({ navigation: { navigate } }) => {
   const handleNavigate = () => {
     navigate(Routes.SignIn.toString());
   };
@@ -66,6 +66,6 @@ const OnBoarding: FC<OnBoardingType> = ({ navigation: { navigate } }) => {
       </View>
     </OnBoardingWrapper>
   );
-};
+});
 
-export default memo(OnBoarding);
+export default OnBoarding;

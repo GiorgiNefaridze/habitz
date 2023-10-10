@@ -5,9 +5,9 @@ import SignIn from "./screens/SignIn/SignIn";
 import Home from "./screens/Home/Home";
 
 export const Routes = {
-  OnBoarding: OnBoarding,
-  SignUp: SignUp,
+  // OnBoarding: OnBoarding,
+  // SignUp: SignUp,
   SignIn: SignIn,
-  Home: Home,
-  CreateAccount: CreateAccount,
+  // Home: Home,
+  // CreateAccount: CreateAccount,
 };
