@@ -7,12 +7,17 @@ import Text from "../../components/Text/Text";
 import Button from "../../components/Button/Button";
 import { paddingHorizontal } from "../../CONSTANTS";
 import { OnBoardingType } from "./Types";
+import { Routes } from "../../ROUTES";
 
 import { OnBoardingWrapper } from "./OnBoarding.style";
 
 const screenWidth: number = Dimensions.get("screen").width;
 
-const OnBoarding: FC<OnBoardingType> = ({ navigation }) => {
+const OnBoarding: FC<OnBoardingType> = ({ navigation: { navigate } }) => {
+  const handleNavigate = () => {
+    navigate(Routes.SignIn.toString());
+  };
+
   return (
     <OnBoardingWrapper>
       <Image
@@ -48,7 +53,7 @@ const OnBoarding: FC<OnBoardingType> = ({ navigation }) => {
           backgroundColor="white"
           borderRadius={20}
           padding={8}
-          onPress={() => {}}
+          onPress={handleNavigate}
         >
           <FontAwesomeIcon icon={faArrowRightToBracket} color="black" />
           <Text
