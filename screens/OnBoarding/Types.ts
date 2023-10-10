@@ -1,5 +1,5 @@
 import { NavigationProp } from "@react-navigation/native";
 
-export type OnBoardingType = {
+export type NavigationType = {
   navigation: NavigationProp;
 };

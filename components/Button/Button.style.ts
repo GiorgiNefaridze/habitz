@@ -11,6 +11,8 @@ export const Btn = styled.TouchableOpacity<Button>`
   padding-top: ${({ padding }) => padding};
   padding-bottom: ${({ padding }) => padding};
   background-color: ${({ backgroundColor }) => backgroundColor};
+  border-width: ${({ borderColor }) => (borderColor ? "1px" : "0px")};
+  border-color: ${({ borderColor }) => borderColor ?? "transparent"};
   flex-direction: row;
   align-items: center;
   justify-content: center;

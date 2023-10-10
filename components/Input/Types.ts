@@ -9,5 +9,4 @@ export type InputType = {
   onChange: (value: string) => void;
   placeholderTextColor: string;
   placeholder: string;
-  borderBottomColor?: string;
 };

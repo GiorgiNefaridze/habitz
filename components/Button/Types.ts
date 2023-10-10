@@ -7,4 +7,6 @@ export type Button = {
   backgroundColor: string;
   children: ReactNode;
   onPress: () => void;
+  borderColor?: string;
+  shadows?: boolean;
 };

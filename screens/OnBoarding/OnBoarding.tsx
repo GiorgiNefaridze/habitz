@@ -6,14 +6,14 @@ import { faArrowRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import Text from "../../components/Text/Text";
 import Button from "../../components/Button/Button";
 import { paddingHorizontal } from "../../CONSTANTS";
-import { OnBoardingType } from "./Types";
+import { NavigationType } from "./Types";
 import { Routes } from "../../ROUTES";
 
 import { OnBoardingWrapper } from "./OnBoarding.style";
 
 const screenWidth: number = Dimensions.get("screen").width;
 
-const OnBoarding: FC<OnBoardingType> = memo(({ navigation: { navigate } }) => {
+const OnBoarding: FC<NavigationType> = memo(({ navigation: { navigate } }) => {
   const handleNavigate = () => {
     navigate(Routes.SignIn.toString());
   };
@@ -54,6 +54,7 @@ const OnBoarding: FC<OnBoardingType> = memo(({ navigation: { navigate } }) => {
           borderRadius={20}
           padding={8}
           onPress={handleNavigate}
+          shadows
         >
           <FontAwesomeIcon icon={faArrowRightToBracket} color="black" />
           <Text

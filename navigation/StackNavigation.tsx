@@ -7,7 +7,7 @@ const Stack = createStackNavigator();
 const StackNavigation = () => {
   return (
     <Stack.Navigator
-      initialRouteName={"SignIn"}
+      initialRouteName={Routes.OnBoarding?.toString()}
       screenOptions={{ header: () => null }}
     >
       {Object.values(Routes).map((screen, idx) => {

@@ -1,6 +1,10 @@
+import { TouchableOpacity, View } from "react-native";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
+
 import { InputType } from "./Types";
 
-import { TextInput } from "./Input.syle";
+import { TextInput, TextInputWrapper } from "./Input.syle";
 
 const Input = (props: InputType) => {
   const {
@@ -13,16 +17,24 @@ const Input = (props: InputType) => {
     ...styleProps
   } = props;
 
+  const borderColor = value?.trim()?.length >= 3 ? "green" : "grey";
+
   return (
-    <TextInput
-      value={value}
-      onChangeText={onChange}
-      secureTextEntry={secure}
-      keyboardType={type ?? "default"}
-      placeholder={placeholder}
-      placeholderTextColor={placeholderTextColor}
-      {...styleProps}
-    />
+    <TextInputWrapper {...styleProps} borderBottomColor={borderColor}>
+      <TextInput
+        value={value}
+        onChangeText={onChange}
+        secureTextEntry={secure}
+        keyboardType={type ?? "default"}
+        placeholder={placeholder}
+        placeholderTextColor={placeholderTextColor}
+        cursorColor="black"
+        {...styleProps}
+      />
+      <TouchableOpacity onPress={() => onChange("")}>
+        <FontAwesomeIcon icon={faCircleXmark} size={20} />
+      </TouchableOpacity>
+    </TextInputWrapper>
   );
 };
 
