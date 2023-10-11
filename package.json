@@ -17,6 +17,7 @@
     "@react-native-masked-view/masked-view": "0.2.9",
     "@react-navigation/native": "^6.1.8",
     "@react-navigation/stack": "^6.3.18",
+    "@types/pg": "^8.10.5",
     "@types/styled-components": "^5.1.28",
     "expo": "~49.0.13",
     "expo-font": "^11.6.0",
