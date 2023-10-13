@@ -17,7 +17,7 @@ const Input = (props: InputType) => {
     ...styleProps
   } = props;
 
-  const borderColor = value?.trim()?.length >= 3 ? "green" : "grey";
+  const borderColor = value?.trim()?.length >= 4 ? "green" : "grey";
 
   return (
     <TextInputWrapper {...styleProps} borderBottomColor={borderColor}>

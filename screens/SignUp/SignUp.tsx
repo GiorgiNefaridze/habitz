@@ -1,4 +1,4 @@
-import { useState, FC, memo, useCallback } from "react";
+import { useState, FC, memo } from "react";
 import { View, Dimensions, KeyboardAvoidingView } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
@@ -7,7 +7,9 @@ import Text from "../../components/Text/Text";
 import Button from "../../components/Button/Button";
 import Inputs from "./Inputs";
 import Genders from "./Genders";
+import Habits from "./Habits";
 import { colors, paddingHorizontal } from "../../CONSTANTS";
+import { isValid } from "../../server/dist/utils/isValidText";
 import { NavigationType } from "../OnBoarding/Types";
 
 import { FormHeader } from "../SignIn/SignIn.style";
@@ -19,18 +21,24 @@ const SignUp: FC<NavigationType> = memo(({ navigation: { goBack } }) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isMale, setIsMale] = useState<boolean>(false);
-  const [page, setPage] = useState<number>(2);
+  const [page, setPage] = useState<number>(1);
 
   const handleNavigate = () => {
+    if (page != 1) {
+      setPage((prev) => prev - 1);
+      return;
+    }
     goBack();
   };
 
-  const handleSignUp = () => {};
-
-  const memoizingFn = (fn: Function) =>
-    useCallback(() => {
-      fn();
-    }, []);
+  const handleSignUp = () => {
+    if (!isValid([name, email, password])) {
+      return;
+    }
+    if (page < 3) {
+      setPage((prev) => prev + 1);
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -72,7 +80,8 @@ const SignUp: FC<NavigationType> = memo(({ navigation: { goBack } }) => {
             setPassword={setPassword}
           />
         )}
-        {page == 2 && <Genders setIsMale={memoizingFn(setIsMale)} />}
+        {page == 2 && <Genders setIsMale={setIsMale} />}
+        {page == 3 && <Habits />}
       </View>
       <Button
         width={screenWidth - 2 * paddingHorizontal}
