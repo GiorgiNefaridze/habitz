@@ -1,11 +1,12 @@
-import { useState, FC, memo } from "react";
+import { useState, FC, memo, useCallback } from "react";
 import { View, Dimensions, KeyboardAvoidingView } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 import Text from "../../components/Text/Text";
 import Button from "../../components/Button/Button";
-import Input from "../../components/Input/Input";
+import Inputs from "./Inputs";
+import Genders from "./Genders";
 import { colors, paddingHorizontal } from "../../CONSTANTS";
 import { NavigationType } from "../OnBoarding/Types";
 
@@ -17,12 +18,19 @@ const SignUp: FC<NavigationType> = memo(({ navigation: { goBack } }) => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [isMale, setIsMale] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(2);
 
   const handleNavigate = () => {
     goBack();
   };
 
   const handleSignUp = () => {};
+
+  const memoizingFn = (fn: Function) =>
+    useCallback(() => {
+      fn();
+    }, []);
 
   return (
     <KeyboardAvoidingView
@@ -54,45 +62,17 @@ const SignUp: FC<NavigationType> = memo(({ navigation: { goBack } }) => {
             text="Create Account"
           />
         </FormHeader>
-        <View>
-          <Text text="Name" color="black" fontSize={15} fontWeight={700} />
-          <Input
-            width={screenWidth - 2 * paddingHorizontal}
-            padding={10}
-            placeholderTextColor="grey"
-            secure={false}
-            type="default"
-            placeholder="Enter your name"
-            onChange={setName}
-            value={name}
+        {page == 1 && (
+          <Inputs
+            email={email}
+            name={name}
+            password={password}
+            setEmail={setEmail}
+            setName={setName}
+            setPassword={setPassword}
           />
-        </View>
-        <View>
-          <Text text="Email" color="black" fontSize={15} fontWeight={700} />
-          <Input
-            width={screenWidth - 2 * paddingHorizontal}
-            padding={10}
-            placeholderTextColor="grey"
-            secure={false}
-            type="email-address"
-            placeholder="Enter your email address"
-            onChange={setEmail}
-            value={email}
-          />
-        </View>
-        <View>
-          <Text text="Password" color="black" fontSize={15} fontWeight={700} />
-          <Input
-            width={screenWidth - 2 * paddingHorizontal}
-            padding={10}
-            placeholderTextColor="grey"
-            secure
-            type="default"
-            placeholder="Enter your password"
-            onChange={setPassword}
-            value={password}
-          />
-        </View>
+        )}
+        {page == 2 && <Genders setIsMale={memoizingFn(setIsMale)} />}
       </View>
       <Button
         width={screenWidth - 2 * paddingHorizontal}
