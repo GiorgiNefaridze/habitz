@@ -5,14 +5,14 @@ import { paddingHorizontal, colors } from "../../CONSTANTS";
 
 const screenWidth: number = Dimensions.get("screen").width;
 
-export const GenderWrapper = styled.View`
+export const Wrapper = styled.View`
   width: ${screenWidth};
   row-gap: 20;
   padding-left: ${paddingHorizontal};
   padding-right: ${paddingHorizontal};
 `;
 
-export const GenderContainer = styled.TouchableOpacity<{ selected: boolean }>`
+export const ContainerBox = styled.TouchableOpacity<{ selected: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;

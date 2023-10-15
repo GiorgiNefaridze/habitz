@@ -5,23 +5,23 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 import Text from "../../components/Text/Text";
 import Button from "../../components/Button/Button";
-import Inputs from "./Inputs";
-import Genders from "./Genders";
-import Habits from "./Habits";
+import Inputs from "./components/Inputs";
+import Genders from "./components/Genders";
+import Habits from "./components/Habits";
 import { colors, paddingHorizontal } from "../../CONSTANTS";
 import { isValid } from "../../server/dist/utils/isValidText";
 import { NavigationType } from "../OnBoarding/Types";
 
 import { FormHeader } from "../SignIn/SignIn.style";
 
-const screenWidth: number = Dimensions.get("screen").width;
+export const screenWidth: number = Dimensions.get("screen").width;
 
 const SignUp: FC<NavigationType> = memo(({ navigation: { goBack } }) => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isMale, setIsMale] = useState<boolean>(false);
-  const [page, setPage] = useState<number>(1);
+  const [page, setPage] = useState<number>(3);
 
   const handleNavigate = () => {
     if (page != 1) {

@@ -1,22 +1,11 @@
 import { useState, memo, Dispatch, SetStateAction, useEffect } from "react";
 import { FlatList, Image } from "react-native";
 
-import Text from "../../components/Text/Text";
+import Text from "../../../components/Text/Text";
+import { genders } from "../data";
 
 import MaleImg from "../../assets/male.png";
-import FemaleImg from "../../assets/female.png";
-import { GenderWrapper, GenderContainer } from "./SignUp.style";
-
-const genders = [
-  {
-    name: "Male",
-    img: MaleImg,
-  },
-  {
-    name: "Female",
-    img: FemaleImg,
-  },
-];
+import { Wrapper, ContainerBox } from "../SignUp.style";
 
 type GenderBoxType = {
   name: string;
@@ -34,13 +23,10 @@ const GenderBox = memo(
     }, [name, selectedGender]);
 
     return (
-      <GenderContainer
-        onPress={() => setSelectedGender(name)}
-        selected={selected}
-      >
+      <ContainerBox onPress={() => setSelectedGender(name)} selected={selected}>
         <Image source={img} />
         <Text color="black" fontSize={16} fontWeight={700} text={name} />
-      </GenderContainer>
+      </ContainerBox>
     );
   }
 );
@@ -54,7 +40,7 @@ const Genders = memo(
     }, [selectedGender]);
 
     return (
-      <GenderWrapper>
+      <Wrapper>
         <Text
           color="black"
           fontSize={25}
@@ -76,7 +62,7 @@ const Genders = memo(
             justifyContent: "space-between",
           }}
         />
-      </GenderWrapper>
+      </Wrapper>
     );
   }
 );

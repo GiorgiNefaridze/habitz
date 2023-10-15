@@ -1,9 +1,9 @@
 import { Dispatch, SetStateAction, memo } from "react";
 import { View, Dimensions } from "react-native";
 
-import Input from "../../components/Input/Input";
-import Text from "../../components/Text/Text";
-import { paddingHorizontal } from "../../CONSTANTS";
+import Input from "../../../components/Input/Input";
+import Text from "../../../components/Text/Text";
+import { paddingHorizontal } from "../../../CONSTANTS";
 
 const screenWidth: number = Dimensions.get("screen").width;
 
