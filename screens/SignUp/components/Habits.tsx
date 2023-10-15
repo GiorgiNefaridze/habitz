@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { memo, useState, Dispatch, SetStateAction } from "react";
 import { FlatList, Image, View } from "react-native";
 
 import Text from "../../../components/Text/Text";
@@ -9,12 +9,13 @@ import { habits } from "../data";
 import DrinkWater from "../../assets/drinkWater.png";
 import { ContainerBox, Wrapper } from "../SignUp.style";
 
-type HabitsBoxType = {
+export type HabitsBoxType = {
   name: string;
   img: ReturnType<typeof DrinkWater>;
+  setHabits: Dispatch<SetStateAction<string[]>>;
 };
 
-const HabitsBox = memo(({ name, img }: HabitsBoxType) => {
+const HabitsBox = memo(({ name, img, setHabits }: HabitsBoxType) => {
   const [selected, setSelected] = useState<boolean>(false);
 
   return (
@@ -24,7 +25,20 @@ const HabitsBox = memo(({ name, img }: HabitsBoxType) => {
         paddingLeft: 0,
         paddingRight: 0,
       }}
-      onPress={() => setSelected((prev) => !prev)}
+      onPress={() => {
+        setHabits((prevHabits: string[]) => {
+          if (
+            prevHabits?.length &&
+            prevHabits?.some((habit) => habit === name)
+          ) {
+            setSelected(false);
+            return prevHabits?.filter((habit) => habit !== name);
+          } else {
+            setSelected(true);
+            return [...prevHabits, name];
+          }
+        });
+      }}
       selected={selected}
     >
       <Image source={img} />
@@ -33,36 +47,40 @@ const HabitsBox = memo(({ name, img }: HabitsBoxType) => {
   );
 });
 
-const Habits = memo(() => {
-  return (
-    <Wrapper>
-      <View>
-        <Text
-          color="black"
-          fontSize={25}
-          fontWeight={700}
-          text="Choose your first habits"
+const Habits = memo(
+  ({ setHabits }: { setHabits: Dispatch<SetStateAction<string[]>> }) => {
+    return (
+      <Wrapper>
+        <View>
+          <Text
+            color="black"
+            fontSize={25}
+            fontWeight={700}
+            text="Choose your first habits"
+          />
+          <Text
+            color="#686873"
+            fontSize={11}
+            fontWeight={500}
+            text="You may add more habits later"
+          />
+        </View>
+        <FlatList
+          data={habits}
+          renderItem={({ item }) => (
+            <HabitsBox {...item} setHabits={setHabits} />
+          )}
+          keyExtractor={(item) => item.name}
+          numColumns={2}
+          columnWrapperStyle={{
+            display: "flex",
+            marginBottom: 15,
+            justifyContent: "space-between",
+          }}
         />
-        <Text
-          color="#686873"
-          fontSize={11}
-          fontWeight={500}
-          text="You may add more habits later"
-        />
-      </View>
-      <FlatList
-        data={habits}
-        renderItem={({ item }) => <HabitsBox {...item} />}
-        keyExtractor={(item) => item.name}
-        numColumns={2}
-        columnWrapperStyle={{
-          display: "flex",
-          marginBottom: 15,
-          justifyContent: "space-between",
-        }}
-      />
-    </Wrapper>
-  );
-});
+      </Wrapper>
+    );
+  }
+);
 
 export default Habits;

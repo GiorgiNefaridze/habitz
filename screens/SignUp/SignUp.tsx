@@ -21,6 +21,7 @@ const SignUp: FC<NavigationType> = memo(({ navigation: { goBack } }) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isMale, setIsMale] = useState<boolean>(false);
+  const [habits, setHabits] = useState<string[]>([]);
   const [page, setPage] = useState<number>(3);
 
   const handleNavigate = () => {
@@ -81,7 +82,7 @@ const SignUp: FC<NavigationType> = memo(({ navigation: { goBack } }) => {
           />
         )}
         {page == 2 && <Genders setIsMale={setIsMale} />}
-        {page == 3 && <Habits />}
+        {page == 3 && <Habits setHabits={setHabits} />}
       </View>
       <Button
         width={screenWidth - 2 * paddingHorizontal}
