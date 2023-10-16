@@ -34,7 +34,7 @@ const OnBoarding: FC<NavigationType> = memo(({ navigation: { navigate } }) => {
         <View>
           <Text
             color="white"
-            fontSize={40}
+            fontSize={1}
             fontWeight={900}
             text="Create Good Habits"
             lineHeight={48}
@@ -42,7 +42,7 @@ const OnBoarding: FC<NavigationType> = memo(({ navigation: { navigate } }) => {
           />
           <Text
             color="white"
-            fontSize={15}
+            fontSize={5}
             fontWeight={300}
             lineHeight={18}
             text="Change your life by slowly adding new healty habits and sticking to them."
@@ -59,7 +59,7 @@ const OnBoarding: FC<NavigationType> = memo(({ navigation: { navigate } }) => {
           <FontAwesomeIcon icon={faArrowRightToBracket} color="black" />
           <Text
             color="black"
-            fontSize={16}
+            fontSize={4}
             fontWeight={600}
             text="Continue with E-mail"
           />

@@ -42,7 +42,7 @@ const HabitsBox = memo(({ name, img, setHabits }: HabitsBoxType) => {
       selected={selected}
     >
       <Image source={img} />
-      <Text color="black" fontSize={15} fontWeight={700} text={name} />
+      <Text color="black" fontSize={5} fontWeight={700} text={name} />
     </ContainerBox>
   );
 });
@@ -54,13 +54,13 @@ const Habits = memo(
         <View>
           <Text
             color="black"
-            fontSize={25}
+            fontSize={3}
             fontWeight={700}
             text="Choose your first habits"
           />
           <Text
             color="#686873"
-            fontSize={11}
+            fontSize={5}
             fontWeight={500}
             text="You may add more habits later"
           />
@@ -73,7 +73,6 @@ const Habits = memo(
           keyExtractor={(item) => item.name}
           numColumns={2}
           columnWrapperStyle={{
-            display: "flex",
             marginBottom: 15,
             justifyContent: "space-between",
           }}

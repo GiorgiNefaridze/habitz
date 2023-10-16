@@ -1,10 +1,12 @@
 import { useFonts } from "expo-font";
 
+import { getFontSize } from "../../utils/getFontSize";
+
 import { Heading } from "./Text.style";
 import { Text as TextType } from "./Types";
 
 const Text = (props: TextType) => {
-  const { text, shadows, ...styleProps } = props;
+  const { text, shadows, fontSize, ...styleProps } = props;
 
   const [fontsLoaded] = useFonts({
     Gabarito: require("../../assets/fonts/Gabarito-VariableFont_wght.ttf"),
@@ -12,6 +14,7 @@ const Text = (props: TextType) => {
 
   return (
     <Heading
+      fontSize={getFontSize(fontSize)}
       style={[
         shadows && {
           shadowColor: "#000",

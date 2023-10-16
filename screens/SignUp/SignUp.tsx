@@ -73,7 +73,7 @@ const SignUp: FC<NavigationType> = memo(
             </Button>
             <Text
               color="black"
-              fontSize={20}
+              fontSize={3}
               fontWeight={900}
               text="Create Account"
             />
@@ -99,7 +99,7 @@ const SignUp: FC<NavigationType> = memo(
           backgroundColor={colors.primary}
           padding={10}
         >
-          <Text color="white" fontSize={20} fontWeight={700} text="Next" />
+          <Text color="white" fontSize={3} fontWeight={700} text="Next" />
         </Button>
       </KeyboardAvoidingView>
     );

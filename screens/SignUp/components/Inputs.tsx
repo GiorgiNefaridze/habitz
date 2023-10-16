@@ -21,7 +21,7 @@ const Inputs = memo(
     return (
       <>
         <View>
-          <Text text="Name" color="black" fontSize={15} fontWeight={700} />
+          <Text text="Name" color="black" fontSize={5} fontWeight={700} />
           <Input
             width={screenWidth - 2 * paddingHorizontal}
             padding={10}
@@ -34,7 +34,7 @@ const Inputs = memo(
           />
         </View>
         <View>
-          <Text text="Email" color="black" fontSize={15} fontWeight={700} />
+          <Text text="Email" color="black" fontSize={5} fontWeight={700} />
           <Input
             width={screenWidth - 2 * paddingHorizontal}
             padding={10}
@@ -47,7 +47,7 @@ const Inputs = memo(
           />
         </View>
         <View>
-          <Text text="Password" color="black" fontSize={15} fontWeight={700} />
+          <Text text="Password" color="black" fontSize={5} fontWeight={700} />
           <Input
             width={screenWidth - 2 * paddingHorizontal}
             padding={10}

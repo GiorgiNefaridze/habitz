@@ -52,13 +52,13 @@ const SignIn: FC<NavigationType> = memo(
             </Button>
             <Text
               color="black"
-              fontSize={20}
+              fontSize={3}
               fontWeight={900}
               text="Continue with E-mail"
             />
           </FormHeader>
           <View>
-            <Text text="E-mail" color="black" fontSize={15} fontWeight={700} />
+            <Text text="E-mail" color="black" fontSize={5} fontWeight={700} />
             <Input
               width={screenWidth - 2 * paddingHorizontal}
               padding={10}
@@ -71,12 +71,7 @@ const SignIn: FC<NavigationType> = memo(
             />
           </View>
           <View>
-            <Text
-              text="Password"
-              color="black"
-              fontSize={15}
-              fontWeight={700}
-            />
+            <Text text="Password" color="black" fontSize={5} fontWeight={700} />
             <Input
               width={screenWidth - 2 * paddingHorizontal}
               padding={10}
@@ -92,7 +87,7 @@ const SignIn: FC<NavigationType> = memo(
         <TouchableOpacity onPress={() => navigate(Routes.SignUp.path)}>
           <Text
             color={colors.primary}
-            fontSize={14}
+            fontSize={5}
             fontWeight={700}
             text="Don’t have account? Let’s create!"
           />
@@ -105,7 +100,7 @@ const SignIn: FC<NavigationType> = memo(
           backgroundColor={colors.primary}
           padding={10}
         >
-          <Text color="white" fontSize={20} fontWeight={700} text="Next" />
+          <Text color="white" fontSize={3} fontWeight={700} text="Next" />
         </Button>
       </SafeAreaView>
     );

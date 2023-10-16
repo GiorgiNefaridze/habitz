@@ -25,7 +25,7 @@ const GenderBox = memo(
     return (
       <ContainerBox onPress={() => setSelectedGender(name)} selected={selected}>
         <Image source={img} />
-        <Text color="black" fontSize={16} fontWeight={700} text={name} />
+        <Text color="black" fontSize={5} fontWeight={700} text={name} />
       </ContainerBox>
     );
   }
@@ -43,7 +43,7 @@ const Genders = memo(
       <Wrapper>
         <Text
           color="black"
-          fontSize={25}
+          fontSize={3}
           fontWeight={700}
           text="Choose your gender"
         />
