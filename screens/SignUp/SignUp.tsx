@@ -1,4 +1,4 @@
-import { useState, FC, memo } from "react";
+import { useState, FC, memo, useContext } from "react";
 import { View, Dimensions, KeyboardAvoidingView } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
@@ -10,8 +10,10 @@ import Genders from "./components/Genders";
 import Habits from "./components/Habits";
 import { colors, paddingHorizontal } from "../../CONSTANTS";
 import { isValid } from "../../server/dist/utils/isValidText";
-import { Routes } from "../../ROUTES";
+import { UserContext } from "../../contexts/userContext";
 import { NavigationType } from "../OnBoarding/Types";
+import { Routes } from "../../ROUTES";
+import { useRegister } from "../../hooks/useRegister";
 
 import { FormHeader } from "../SignIn/SignIn.style";
 
@@ -26,6 +28,9 @@ const SignUp: FC<NavigationType> = memo(
     const [habits, setHabits] = useState<string[]>([]);
     const [page, setPage] = useState<number>(1);
 
+    const { dispatch, state } = UserContext();
+    const { register } = useRegister();
+
     const handleNavigate = () => {
       if (page != 1) {
         setPage((prev) => prev - 1);
@@ -34,18 +39,30 @@ const SignUp: FC<NavigationType> = memo(
       goBack();
     };
 
-    const handleSignUp = () => {
+    const handleSignUp = async () => {
       if (!isValid([name, email, password])) {
         return;
       }
-
       if (page < 3) {
         setPage((prev) => prev + 1);
         return;
       }
 
-      //After successful API call
-      navigate(Routes.Home.path);
+      const data = {
+        name,
+        email,
+        password,
+        isMale,
+        habits,
+      };
+
+      const res = await register(data);
+
+      if (!res.response) {
+        return;
+      }
+
+      navigate(Routes.SignIn.path);
     };
 
     return (
@@ -59,6 +76,14 @@ const SignUp: FC<NavigationType> = memo(
           paddingBottom: 20,
         }}
       >
+        {state?.errorMessage && (
+          <Text
+            color="red"
+            fontSize={4}
+            fontWeight={900}
+            text={state.errorMessage}
+          />
+        )}
         <View style={{ flex: 1, alignItems: "center", rowGap: 20 }}>
           <FormHeader width={screenWidth}>
             <Button

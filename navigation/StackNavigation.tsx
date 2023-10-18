@@ -9,7 +9,7 @@ type StackScreens = { path: string; component: JSX.Element };
 const StackNavigation = () => {
   return (
     <Stack.Navigator
-      initialRouteName={Routes.OnBoarding.path}
+      initialRouteName={Routes.SignUp.path}
       screenOptions={{ header: () => null }}
     >
       {Object.values(Routes).map(

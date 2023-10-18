@@ -5,7 +5,7 @@ const BaseUrl = () => {
 
   return axios.create({
     headers: { Authorization: "Bearer " + token },
-    baseURL: "http://localhost:3400",
+    baseURL: "http://192.168.100.4:3400",
   });
 };
 
