@@ -41,6 +41,22 @@ export const RegisterController: ControllerType = async (req, res) => {
 
 export const LoginController: ControllerType = async (req, res) => {
   try {
+    const { email, password } = req.body;
+
+    if (!isValid([email, password])) {
+      throw new Error(errorMessages.invaliCredentials);
+    }
+
+    const userExists = await isUserExists(email);
+
+    if (!userExists) {
+      throw new Error(errorMessages.userNotExists);
+    }
+
+    const {rows: [userData]} = await connection.query("SELECT password FROM users WHERE email = $1", [email])
+    
+
+  
   } catch (error) {
     res.status(500).json({ response: error.message });
   }
