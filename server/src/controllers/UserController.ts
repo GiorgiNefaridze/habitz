@@ -2,6 +2,8 @@ import { connection } from "../dbConnection";
 import { isValid } from "../utils/isValidText";
 import { isUserExists } from "../utils/isUserExists";
 import { errorMessages, successMessages } from "../CONSTANTS";
+import { hashPassword, comparePassword } from "../utils/securePassword";
+import { generateJwt } from "../utils/jwt";
 import { ControllerType } from "../Types";
 
 export const RegisterController: ControllerType = async (req, res) => {
@@ -22,11 +24,13 @@ export const RegisterController: ControllerType = async (req, res) => {
       throw new Error(errorMessages.userExists);
     }
 
+    const hashedPassword = await hashPassword(password);
+
     const {
       rows: [userCreated],
     } = await connection.query(
       "INSERT INTO users (user_name, email, password, habits, ismale) VALUES ($1,$2,$3,$4,$5) RETURNING email",
-      [name, email, password, habits, isMale]
+      [name, email, hashedPassword, habits, isMale]
     );
 
     if (Object.keys(userCreated)?.length) {
@@ -53,10 +57,20 @@ export const LoginController: ControllerType = async (req, res) => {
       throw new Error(errorMessages.userNotExists);
     }
 
-    const {rows: [userData]} = await connection.query("SELECT password FROM users WHERE email = $1", [email])
-    
+    const {
+      rows: [userData],
+    } = await connection.query(
+      "SELECT user_id,password,name FROM users WHERE email = $1",
+      [email]
+    );
 
-  
+    if (!(await comparePassword(password, userData.password))) {
+      throw new Error(errorMessages.userNotExists);
+    }
+
+    const token = generateJwt({ id: userData?.user_id });
+
+    res.status(200).json({ name: userData?.name, token });
   } catch (error) {
     res.status(500).json({ response: error.message });
   }

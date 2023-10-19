@@ -2,7 +2,7 @@ export const errorMessages = {
   invaliCredentials:
     "Please enter a valid credentials (it's too short or incorrect data).",
   userExists: "User with this email already exists",
-  userNotExists: "User with this credentials does not exists",
+  userNotExists: "User with this credentials does not exist",
   internalError:
     "Error may be caused by invalid input format or database is down",
   missingToken:

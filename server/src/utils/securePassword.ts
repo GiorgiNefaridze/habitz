@@ -8,7 +8,10 @@ const hashPassword = async (plainPwd: string) => {
   return hash(plainPwd, salt);
 };
 
-const comparePassword = async (plainPwd: string, hash: string): boolean => {
+const comparePassword = async (
+  plainPwd: string,
+  hash: string
+): Promise<boolean> => {
   return await compare(plainPwd, hash);
 };
 
