@@ -1,7 +1,8 @@
-import { useState, FC, memo, useContext } from "react";
+import { useState, FC, memo, useEffect } from "react";
 import { View, Dimensions, KeyboardAvoidingView } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import Toast from "react-native-toast-message";
 
 import Text from "../../components/Text/Text";
 import Button from "../../components/Button/Button";
@@ -28,8 +29,8 @@ const SignUp: FC<NavigationType> = memo(
     const [habits, setHabits] = useState<string[]>([]);
     const [page, setPage] = useState<number>(1);
 
-    const { dispatch, state } = UserContext();
-    const { register } = useRegister();
+    const { state } = UserContext();
+    const { register, error, setError } = useRegister();
 
     const handleNavigate = () => {
       if (page != 1) {
@@ -38,6 +39,17 @@ const SignUp: FC<NavigationType> = memo(
       }
       goBack();
     };
+
+    useEffect(() => {
+      if (error) {
+        Toast.show({
+          type: "error",
+          text1: "Error",
+          text2: error,
+        });
+      }
+      setError("");
+    }, [error]);
 
     const handleSignUp = async () => {
       if (!isValid([name, email, password])) {
@@ -58,7 +70,7 @@ const SignUp: FC<NavigationType> = memo(
 
       const res = await register(data);
 
-      if (!res.response) {
+      if (!res?.response) {
         return;
       }
 
@@ -126,6 +138,7 @@ const SignUp: FC<NavigationType> = memo(
         >
           <Text color="white" fontSize={3} fontWeight={700} text="Next" />
         </Button>
+        <Toast />
       </KeyboardAvoidingView>
     );
   }

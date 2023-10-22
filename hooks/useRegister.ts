@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { BaseUrl } from "../api/ApiBaseUrl";
 
 type RegisterDataType = {
@@ -9,6 +11,8 @@ type RegisterDataType = {
 };
 
 const useRegister = () => {
+  const [error, setError] = useState("");
+
   const register = async (data: RegisterDataType) => {
     const registerDto = {
       name: data.name,
@@ -25,11 +29,11 @@ const useRegister = () => {
 
       return { response };
     } catch (error) {
-      console.warn(error.message);
+      setError(error.response.data.response);
     }
   };
 
-  return { register };
+  return { register, error, setError };
 };
 
 export { useRegister };
