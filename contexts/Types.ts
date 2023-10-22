@@ -12,11 +12,9 @@ export type UserContextProviderType = {
 export type StateType = {
   name: string | null;
   token: string | null;
-  errorMessage: string | null;
-  successMessage: string | null;
 };
 
 export type ActionType = {
   type: "LOGIN" | "LOGOUT";
-  payload: {};
+  payload: StateType;
 };

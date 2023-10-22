@@ -1,13 +1,15 @@
-import { memo, FC, useState } from "react";
+import { memo, FC, useState, useEffect } from "react";
 import { Dimensions, SafeAreaView, View, TouchableOpacity } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import Toast from "react-native-toast-message";
 
 import Text from "../../components/Text/Text";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import { paddingHorizontal, colors } from "../../CONSTANTS";
 import { NavigationType } from "../OnBoarding/Types";
+import { useLogin } from "../../hooks/useLogin";
 import { Routes } from "../../ROUTES";
 
 import { FormHeader } from "./SignIn.style";
@@ -19,12 +21,34 @@ const SignIn: FC<NavigationType> = memo(
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
+    const { login, error, setError } = useLogin();
+
     const handleNavigate = () => {
       goBack();
     };
 
-    const handleLogin = () => {
-      //API call
+    useEffect(() => {
+      if (error) {
+        Toast.show({
+          type: "error",
+          text1: "Error",
+          text2: error,
+        });
+      }
+      setError("");
+    }, [error]);
+
+    const handleLogin = async () => {
+      const data = {
+        email,
+        password,
+      };
+
+      const resultData = await login(data);
+
+      if (resultData && Object.keys(resultData)?.length) {
+        navigate(Routes.Home.path);
+      }
     };
 
     return (
@@ -76,13 +100,22 @@ const SignIn: FC<NavigationType> = memo(
               width={screenWidth - 2 * paddingHorizontal}
               padding={10}
               placeholderTextColor="grey"
-              secure={false}
+              secure={true}
               type="email-address"
               placeholder="Enter your password"
               onChange={setPassword}
               value={password}
             />
           </View>
+          {error && (
+            <Text
+              color="red"
+              fontSize={5}
+              fontWeight={700}
+              text={error}
+              lineHeight={15}
+            />
+          )}
         </View>
         <TouchableOpacity onPress={() => navigate(Routes.SignUp.path)}>
           <Text
@@ -102,6 +135,7 @@ const SignIn: FC<NavigationType> = memo(
         >
           <Text color="white" fontSize={3} fontWeight={700} text="Next" />
         </Button>
+        <Toast />
       </SafeAreaView>
     );
   }

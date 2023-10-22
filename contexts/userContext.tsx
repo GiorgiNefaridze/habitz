@@ -1,4 +1,11 @@
-import { createContext, useContext, useReducer, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useReducer,
+  ReactNode,
+  useEffect,
+} from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import {
   userContextType,
@@ -16,6 +23,17 @@ const userReducer = (state: StateType, action: ActionType) => {
 
   switch (type) {
     case "LOGIN": {
+      const token = payload?.token;
+      const name = payload?.name;
+
+      return {
+        ...state,
+        name,
+        token,
+      };
+    }
+    case "LOGOUT": {
+      return { ...state, name: null, token: null };
     }
     default: {
       return state;
@@ -33,9 +51,13 @@ const UserContextProvider = ({
   const [state, dispatch] = useReducer(userReducer, {
     name: null,
     token: null,
-    errorMessage: null,
-    successMessage: null,
   });
+
+  useEffect(() => {
+    (async () => {
+      await AsyncStorage.setItem("token", state?.token ?? "");
+    })();
+  }, [state.token]);
 
   return (
     <userContext.Provider value={{ state, dispatch }}>

@@ -60,7 +60,7 @@ export const LoginController: ControllerType = async (req, res) => {
     const {
       rows: [userData],
     } = await connection.query(
-      "SELECT user_id,password,name FROM users WHERE email = $1",
+      "SELECT user_id,password,user_name FROM users WHERE email = $1",
       [email]
     );
 
@@ -70,7 +70,7 @@ export const LoginController: ControllerType = async (req, res) => {
 
     const token = generateJwt({ id: userData?.user_id });
 
-    res.status(200).json({ name: userData?.name, token });
+    res.status(200).json({ name: userData?.user_name, token });
   } catch (error) {
     res.status(500).json({ response: error.message });
   }
