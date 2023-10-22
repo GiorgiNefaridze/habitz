@@ -22,7 +22,7 @@ const useLogin = () => {
     try {
       const {
         data: { name, token },
-      } = await BaseUrl().post("/api/user/login", loginDto);
+      } = await (await BaseUrl()).post("/api/user/login", loginDto);
 
       dispatch({ type: "LOGIN", payload: { name, token } });
       return { name, token };

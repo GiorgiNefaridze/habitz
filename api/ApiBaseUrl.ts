@@ -1,7 +1,16 @@
-import axios from "axios";
+import { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios, { AxiosInstance } from "axios";
 
-const BaseUrl = () => {
-  const token = "";
+const BaseUrl = async (): Promise<AxiosInstance> => {
+  const [token, setToken] = useState<string>("");
+
+  useEffect(() => {
+    (async () => {
+      const tkn = await AsyncStorage.getItem("token");
+      setToken(tkn ?? "");
+    })();
+  }, []);
 
   return axios.create({
     headers: { Authorization: "Bearer " + token },

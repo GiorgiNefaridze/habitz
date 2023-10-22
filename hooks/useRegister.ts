@@ -21,7 +21,7 @@ const useRegister = () => {
     try {
       const {
         data: { response },
-      } = await BaseUrl().post("/api/user/register", registerDto);
+      } = await (await BaseUrl()).post("/api/user/register", registerDto);
 
       return { response };
     } catch (error) {

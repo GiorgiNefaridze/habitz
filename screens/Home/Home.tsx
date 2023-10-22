@@ -1,9 +1,14 @@
 import { View, Text } from "react-native";
 
+import { UserContext } from "../../contexts/userContext";
+
 const Home = () => {
+  const { state } = UserContext();
+
   return (
     <View>
-      <Text>Home</Text>
+      <Text>{state.name}</Text>
+      <Text>{state.token}</Text>
     </View>
   );
 };
