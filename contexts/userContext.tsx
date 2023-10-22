@@ -55,6 +55,9 @@ const UserContextProvider = ({
 
   useEffect(() => {
     (async () => {
+      if (state.token === null) {
+        return;
+      }
       await AsyncStorage.setItem("token", state?.token ?? "");
     })();
   }, [state.token]);

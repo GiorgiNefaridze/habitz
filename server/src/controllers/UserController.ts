@@ -3,10 +3,30 @@ import { isValid } from "../utils/isValidText";
 import { isUserExists } from "../utils/isUserExists";
 import { errorMessages, successMessages } from "../CONSTANTS";
 import { hashPassword, comparePassword } from "../utils/securePassword";
-import { generateJwt } from "../utils/jwt";
+import { generateJwt, verifyJwt } from "../utils/jwt";
 import { ControllerType } from "../Types";
 
-export const RegisterController: ControllerType = async (req, res) => {
+const RetriveUserDataController: ControllerType = async (req, res) => {
+  try {
+    const header = req.headers;
+
+    const token = header["authorization"]?.split(" ")[1];
+    const { id } = verifyJwt(token ?? "");
+
+    const {
+      rows: [user],
+    } = await connection.query(
+      "SELECT user_name,email,ismale,habits FROM users WHERE user_id = $1",
+      [id]
+    );
+
+    res.status(200).json({ response: user });
+  } catch (error) {
+    res.status(500).json({ response: error.message });
+  }
+};
+
+const RegisterController: ControllerType = async (req, res) => {
   try {
     const { name, email, password, isMale, habits } = req.body;
 
@@ -43,7 +63,7 @@ export const RegisterController: ControllerType = async (req, res) => {
   }
 };
 
-export const LoginController: ControllerType = async (req, res) => {
+const LoginController: ControllerType = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -75,3 +95,5 @@ export const LoginController: ControllerType = async (req, res) => {
     res.status(500).json({ response: error.message });
   }
 };
+
+export { RegisterController, LoginController, RetriveUserDataController };
