@@ -5,4 +5,5 @@ export type Text = {
   color: string;
   shadows?: boolean;
   lineHeight?: number;
+  style?: any;
 };
