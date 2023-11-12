@@ -33,7 +33,10 @@ const userReducer = (state: StateType, action: ActionType) => {
       };
     }
     case "LOGOUT": {
-      return { ...state, name: null, token: null };
+      return { ...state, name: null, token: null, habits: null };
+    }
+    case "RETRIVE_DATA": {
+      return { ...state, habits: payload?.habits };
     }
     default: {
       return state;
@@ -51,6 +54,7 @@ const UserContextProvider = ({
   const [state, dispatch] = useReducer(userReducer, {
     name: null,
     token: null,
+    habits: null,
   });
 
   useEffect(() => {

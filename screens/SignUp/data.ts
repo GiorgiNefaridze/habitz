@@ -7,7 +7,12 @@ import Meditate from "../../assets/meditate.png";
 import Study from "../../assets/study.png";
 import Sleep from "../../assets/sleep.png";
 
-const genders = [
+export type dataType = {
+  name: string;
+  img: ReturnType<typeof MaleImg>;
+};
+
+const genders: dataType[] = [
   {
     name: "Male",
     img: MaleImg,
@@ -18,7 +23,7 @@ const genders = [
   },
 ];
 
-const habits = [
+const habits: dataType[] = [
   {
     name: "Drink water",
     img: DrinkWater,

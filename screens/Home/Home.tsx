@@ -1,12 +1,15 @@
-import { useEffect, memo, FC, useState } from "react";
+import { useEffect, memo, FC, useState, useCallback } from "react";
 import { View, Image, FlatList } from "react-native";
 
 import { NavigationType } from "../OnBoarding/Types";
 import { useRetriveUserData } from "../../hooks/useRetriveUserData";
+import { UserContext } from "../../contexts/userContext";
 import { upperText } from "../../utils/upperText";
 import { habits } from "../SignUp/data";
 import { getDays } from "../../utils/dateRecognizer";
+import Habit from "./Habit/Habit";
 import Text from "../../components/Text/Text";
+import { paddingHorizontal } from "../../CONSTANTS";
 import Calendar from "./Calendar/Calendar";
 
 import { HomeWrapper, HomeHeader, HabitEmoji } from "./Home.style";
@@ -25,14 +28,14 @@ const Home: FC<NavigationType> = memo(() => {
   const [days, setDays] = useState<CalendarType[]>([]);
 
   const { retriveUserData } = useRetriveUserData();
+  const { state } = UserContext();
 
-  const getRandomHabit = () => {
+  const getRandomHabit = useCallback(() => {
     const userHabits = userData?.habits;
     const randomIndex = Math.floor(Math.random() * userHabits?.length);
 
-    return habits.find((habit) => habit.name === userHabits?.[randomIndex])
-      ?.img;
-  };
+    return habits.find(({ name }) => name === userHabits?.[randomIndex])?.img;
+  }, [userData?.habits]);
 
   useEffect(() => {
     const date = getDays();
@@ -84,6 +87,20 @@ const Home: FC<NavigationType> = memo(() => {
           keyExtractor={(item) => Math.random().toString()}
           horizontal
           showsHorizontalScrollIndicator={false}
+        />
+      </View>
+      <View
+        style={{
+          paddingHorizontal: paddingHorizontal - 10,
+          marginTop: 30,
+          rowGap: 15,
+        }}
+      >
+        <Text color="black" fontSize={3} text="Habits" fontWeight={700} />
+        <FlatList
+          data={state?.habits}
+          renderItem={({ item }) => <Habit habit={item} />}
+          keyExtractor={(item) => item}
         />
       </View>
     </HomeWrapper>
