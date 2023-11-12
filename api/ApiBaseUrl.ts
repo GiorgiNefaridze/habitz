@@ -1,5 +1,5 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios, { AxiosInstance } from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const BaseUrl = async (): Promise<AxiosInstance> => {
   const token = await AsyncStorage.getItem("token");

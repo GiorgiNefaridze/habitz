@@ -32,24 +32,24 @@ const BottomTabNavigation = () => {
         },
       }}
     >
-      {Object.values(TabBarRoutes).map(({ component, path, icon }) => {
-        return (
-          <Tab.Screen
-            name={path}
-            component={component}
-            options={{
-              tabBarIcon: ({ focused }) => (
+      {Object.values(TabBarRoutes).map(({ component, path, icon }) => (
+        <Tab.Screen
+          name={path}
+          component={component}
+          options={{
+            tabBarIcon: ({ focused }) => {
+              return (
                 <FontAwesomeIcon
                   icon={icon}
                   color={focused ? colors.primary : "grey"}
                   size={path === "AddHabit" ? 33 : 22}
                 />
-              ),
-              tabBarShowLabel: false,
-            }}
-          />
-        );
-      })}
+              );
+            },
+            tabBarShowLabel: false,
+          }}
+        />
+      ))}
     </Tab.Navigator>
   );
 };

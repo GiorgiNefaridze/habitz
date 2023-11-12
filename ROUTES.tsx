@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { View } from "react-native";
 import {
   faArrowRightFromBracket,
@@ -9,9 +10,16 @@ import OnBoarding from "./screens/OnBoarding/OnBoarding";
 import SignUp from "./screens/SignUp/SignUp";
 import SignIn from "./screens/SignIn/SignIn";
 import Home from "./screens/Home/Home";
+import AddHabit from "./screens/AddHabit/AddHabit";
 import BottomTabNavigation from "./navigation/BottomTabNavigator";
 
+import { useLogout } from "./hooks/useLogout";
+
 const Logout = () => {
+  const { logout } = useLogout();
+  useEffect(() => {
+    logout();
+  }, []);
   return <View></View>;
 };
 
@@ -42,7 +50,7 @@ const TabBarRoutes = {
   },
   AddHabit: {
     path: "AddHabit",
-    component: Logout,
+    component: AddHabit,
     icon: faCirclePlus,
   },
   Logout: {
