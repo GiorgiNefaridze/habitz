@@ -15,7 +15,7 @@ export type HabitsBoxType = {
   setHabits: Dispatch<SetStateAction<string[]>>;
 };
 
-const HabitsBox = memo(({ name, img, setHabits }: HabitsBoxType) => {
+export const HabitsBox = memo(({ name, img, setHabits }: HabitsBoxType) => {
   const [selected, setSelected] = useState<boolean>(false);
 
   return (

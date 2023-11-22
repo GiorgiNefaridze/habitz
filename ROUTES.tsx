@@ -1,27 +1,38 @@
-import { useEffect } from "react";
+import { useEffect, memo } from "react";
 import { View } from "react-native";
 import {
   faArrowRightFromBracket,
   faCirclePlus,
   faHome,
 } from "@fortawesome/free-solid-svg-icons";
+import { useIsFocused } from "@react-navigation/native";
 
 import OnBoarding from "./screens/OnBoarding/OnBoarding";
 import SignUp from "./screens/SignUp/SignUp";
 import SignIn from "./screens/SignIn/SignIn";
 import Home from "./screens/Home/Home";
-import AddHabit from "./screens/AddHabit/AddHabit";
+import CreateHabit from "./screens/CreateHabit/CreateHabit";
 import BottomTabNavigation from "./navigation/BottomTabNavigator";
+import { NavigationType } from "./screens/OnBoarding/Types";
 
 import { useLogout } from "./hooks/useLogout";
 
-const Logout = () => {
+const Logout = memo(() => {
   const { logout } = useLogout();
+  const isFocused = useIsFocused();
   useEffect(() => {
     logout();
-  }, []);
+  }, [isFocused]);
   return <View></View>;
-};
+});
+
+const AddHabit = memo(({ navigation }: NavigationType) => {
+  const isFocused = useIsFocused();
+  useEffect(() => {
+    navigation.navigate(Routes.AddHabit.path);
+  }, [isFocused]);
+  return <View></View>;
+});
 
 const Routes = {
   OnBoarding: {
@@ -35,6 +46,10 @@ const Routes = {
   SignIn: {
     path: "SignIn",
     component: SignIn,
+  },
+  AddHabit: {
+    path: "AddHabitComponent",
+    component: CreateHabit,
   },
   Home: {
     path: "Home",
