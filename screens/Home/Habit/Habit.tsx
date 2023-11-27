@@ -13,7 +13,9 @@ type HabitType = {
 };
 
 const Habit = memo(({ habit }: HabitType) => {
-  const { name, img } = habits?.find(({ name }) => name === habit) as dataType;
+  console.log(habit.habit_color);
+
+  // const { name, img } = habits?.find(({ name }) => name === habit) as dataType;
 
   return (
     <HabitElement>
@@ -24,17 +26,18 @@ const Habit = memo(({ habit }: HabitType) => {
         tintColor={colors.primary}
         backgroundColor="#3d5875"
         children={() => {
-          return <Image source={img} style={{ width: 20, height: 20 }} />;
+          return (
+            <Text
+              color="black"
+              fontSize={5}
+              fontWeight={300}
+              text={habit.habit_color}
+              lineHeight={20}
+            />
+          );
         }}
       />
       <View>
-        <Text
-          color="black"
-          fontSize={4}
-          fontWeight={400}
-          text={name}
-          lineHeight={20}
-        />
         <Text
           color="black"
           fontSize={5}

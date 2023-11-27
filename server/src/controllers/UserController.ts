@@ -3,22 +3,15 @@ import { isValid } from "../utils/isValidText";
 import { isUserExists } from "../utils/isUserExists";
 import { errorMessages, successMessages } from "../CONSTANTS";
 import { hashPassword, comparePassword } from "../utils/securePassword";
-import { generateJwt, verifyJwt } from "../utils/jwt";
+import { generateJwt } from "../utils/jwt";
+import { getUserData } from "../utils/getUserData";
 import { ControllerType } from "../Types";
 
 const RetriveUserDataController: ControllerType = async (req, res) => {
   try {
     const header = req.headers;
 
-    const token = header["authorization"]?.split(" ")[1];
-    const { id } = verifyJwt(token ?? "");
-
-    const {
-      rows: [user],
-    } = await connection.query(
-      "SELECT user_name,email,ismale,habits FROM users WHERE user_id = $1",
-      [id]
-    );
+    const user = await getUserData(header);
 
     res.status(200).json({ response: user });
   } catch (error) {
@@ -30,11 +23,7 @@ const RegisterController: ControllerType = async (req, res) => {
   try {
     const { name, email, password, isMale, habits } = req.body;
 
-    if (
-      !isValid([name, email, password]) ||
-      habits?.length < 1 ||
-      isMale === undefined
-    ) {
+    if (!isValid([name, email, password]) || habits?.length < 1) {
       throw new Error(errorMessages.invaliCredentials);
     }
 
@@ -49,8 +38,8 @@ const RegisterController: ControllerType = async (req, res) => {
     const {
       rows: [userCreated],
     } = await connection.query(
-      "INSERT INTO users (user_name, email, password, habits, ismale) VALUES ($1,$2,$3,$4,$5) RETURNING email",
-      [name, email, hashedPassword, habits, isMale]
+      "INSERT INTO users (user_name, user_email, password, ismale) VALUES ($1,$2,$3,$4) RETURNING user_email",
+      [name, email, hashedPassword, isMale]
     );
 
     if (Object.keys(userCreated)?.length) {
@@ -80,7 +69,7 @@ const LoginController: ControllerType = async (req, res) => {
     const {
       rows: [userData],
     } = await connection.query(
-      "SELECT user_id,password,user_name FROM users WHERE email = $1",
+      "SELECT user_id,password,user_name FROM users WHERE user_email = $1",
       [email]
     );
 

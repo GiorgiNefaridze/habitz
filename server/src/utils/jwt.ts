@@ -3,11 +3,9 @@ import { config } from "dotenv";
 
 config();
 
-type dataType = {
-  id: number;
-};
+type DataType = (data: { id: number }) => string;
 
-const generateJwt = (data: dataType): string | Buffer => {
+const generateJwt: DataType = (data): string => {
   return jwt.sign(data, process.env.SECRET ?? "");
 };
 

@@ -55,7 +55,7 @@ const Routes = {
     path: "Home",
     component: BottomTabNavigation,
   },
-};
+} as const;
 
 const TabBarRoutes = {
   HomePage: {
@@ -73,6 +73,6 @@ const TabBarRoutes = {
     component: Logout,
     icon: faArrowRightFromBracket,
   },
-};
+} as const;
 
 export { Routes, TabBarRoutes };

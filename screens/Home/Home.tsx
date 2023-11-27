@@ -25,6 +25,7 @@ const HabitEmojiSize: number = 23;
 
 const Home: FC<NavigationType> = memo(() => {
   const [userData, setUserData] = useState({});
+  const [habit, setHabit] = useState([]);
   const [days, setDays] = useState<CalendarType[]>([]);
 
   const { retriveUserData } = useRetriveUserData();
@@ -44,6 +45,22 @@ const Home: FC<NavigationType> = memo(() => {
       const user = await retriveUserData();
       setUserData(user);
     })();
+
+    fetch("http://192.168.100.4:3400/api/habit", {
+      method: "GEt",
+      headers: {
+        "Content-Type": "application/json",
+        authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzAxMDI3NDQxfQ.416vXKVozgVqXopGh4h4tTqa-_nKypt3z4z-5m85F0Q",
+      },
+    })
+      .then((res) => res.json())
+      .then((r) => {
+        setHabit(r.response);
+      })
+      .catch((er) => {
+        console.log(er.response.data);
+      });
   }, []);
 
   return (
@@ -98,7 +115,7 @@ const Home: FC<NavigationType> = memo(() => {
       >
         <Text color="black" fontSize={3} text="Habits" fontWeight={700} />
         <FlatList
-          data={state?.habits}
+          data={habit}
           renderItem={({ item }) => <Habit habit={item} />}
           keyExtractor={(item) => item}
         />

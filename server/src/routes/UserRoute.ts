@@ -6,7 +6,7 @@ import {
   RetriveUserDataController,
 } from "../controllers/UserController";
 
-const router = Router();
+const router: Router = Router();
 
 router.get("/", RetriveUserDataController);
 

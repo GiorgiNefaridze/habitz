@@ -1,7 +1,5 @@
-type isValidType = {
-  (inputs: string[]): boolean;
-};
+type IsValidType = (inputs: string[]) => boolean;
 
-export const isValid: isValidType = (inputs) => {
-  return inputs.every((text) => text?.length >= 4);
+export const isValid: IsValidType = (inputs) => {
+  return inputs.every((text) => Boolean(text?.length));
 };
