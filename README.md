@@ -31,4 +31,8 @@ database.sql
 
 📸**snapshot**
 
-<video src="./assets/RPReplay_Final1701705271.mp4" width="180" />
+
+
+https://github.com/GiorgiNefaridze/habitz/assets/97899111/ca6abc3c-6067-450b-a05a-35b51cf1c253
+
+
