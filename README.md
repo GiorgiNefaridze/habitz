@@ -1,8 +1,6 @@
 ### **Habitz** - cross platform application, which helps users to manage their habits 🥴.
 
-<div style="width:200px">
- <img src="./assets/icon.png" />
-</div>
+<img src="./assets/icon.png" style="width:220px;height:150px"  />
 
 > In order to use app, follow this guide.
 
