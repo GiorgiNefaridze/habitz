@@ -1,19 +1,37 @@
-import { BaseUrl } from "../api/ApiBaseUrl";
-import { UserContext } from "../contexts/userContext";
+import { isAxiosError } from "axios";
+import { useQuery } from "react-query";
+
+import networkClient, { getRequestHeader } from "../network";
+
+export type UserDataType = {
+  user_name: string;
+};
+
+type ResponseType = {
+  response: UserDataType;
+};
 
 const useRetriveUserData = () => {
-  const { dispatch } = UserContext();
   const retriveUserData = async () => {
-    const {
-      data: { response },
-    } = await (await BaseUrl()).get("/api/user/");
+    try {
+      const {
+        data: { response },
+      } = await networkClient.get<ResponseType>("/api/user", {
+        headers: await getRequestHeader(),
+      });
 
-    dispatch({ type: "RETRIVE_DATA", payload: { habits: response?.habits } });
-
-    return response;
+      return response;
+    } catch (error) {
+      if (isAxiosError(error)) {
+        throw new Error(error?.response?.data.response);
+      }
+    }
   };
 
-  return { retriveUserData };
+  return useQuery({
+    queryKey: ["retriveUserData"],
+    queryFn: retriveUserData,
+  });
 };
 
 export { useRetriveUserData };

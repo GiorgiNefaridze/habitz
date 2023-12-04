@@ -5,17 +5,15 @@ export type userContextType = {
   state: StateType;
 };
 
-export type UserContextProviderType = {
+export type UserContextProviderType = (props: {
   children: ReactNode;
-};
+}) => ReactNode;
 
 export type StateType = {
-  name: string | null;
   token: string | null;
-  habits: string[] | null;
 };
 
 export type ActionType = {
-  type: "LOGIN" | "LOGOUT" | "RETRIVE_DATA";
+  type: "LOGIN" | "LOGOUT";
   payload: StateType;
 };

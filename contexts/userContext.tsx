@@ -1,11 +1,5 @@
-import {
-  createContext,
-  useContext,
-  useReducer,
-  ReactNode,
-  useEffect,
-} from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createContext, useContext, useReducer, useEffect } from "react";
+import Storage from "@react-native-async-storage/async-storage";
 
 import {
   userContextType,
@@ -14,33 +8,18 @@ import {
   ActionType,
 } from "./Types";
 
-export const userContext = createContext<userContextType>(
-  {} as userContextType
-);
+export const userContext = createContext({} as userContextType);
 
-const userReducer = (state: StateType, action: ActionType) => {
-  const { type, payload } = action;
+const authReducer = (state: StateType, action: ActionType) => {
+  const { payload, type } = action;
 
   switch (type) {
-    case "LOGIN": {
-      const token = payload?.token;
-      const name = payload?.name;
-
-      return {
-        ...state,
-        name,
-        token,
-      };
-    }
-    case "LOGOUT": {
-      return { ...state, name: null, token: null, habits: null };
-    }
-    case "RETRIVE_DATA": {
-      return { ...state, habits: payload?.habits };
-    }
-    default: {
+    case "LOGIN":
+      return { ...state, token: payload.token };
+    case "LOGOUT":
+      return { ...state, token: null };
+    default:
       return state;
-    }
   }
 };
 
@@ -48,23 +27,21 @@ const UserContext = () => {
   return useContext(userContext);
 };
 
-const UserContextProvider = ({
-  children,
-}: UserContextProviderType): ReactNode => {
-  const [state, dispatch] = useReducer(userReducer, {
-    name: null,
+const UserContextProvider: UserContextProviderType = ({ children }) => {
+  const [state, dispatch] = useReducer(authReducer, {
     token: null,
-    habits: null,
   });
+
+  const { token } = state;
 
   useEffect(() => {
     (async () => {
-      if (state.token === null) {
+      if (token == null) {
         return;
       }
-      await AsyncStorage.setItem("token", state?.token ?? "");
+      await Storage.setItem("token", token);
     })();
-  }, [state.token]);
+  }, [token]);
 
   return (
     <userContext.Provider value={{ state, dispatch }}>

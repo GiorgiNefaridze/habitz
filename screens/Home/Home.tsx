@@ -1,67 +1,54 @@
-import { useEffect, memo, FC, useState, useCallback } from "react";
-import { View, Image, FlatList } from "react-native";
+import { useEffect, memo, FC, useState } from "react";
+import { View, FlatList, Platform } from "react-native";
+import Toast from "react-native-toast-message";
 
-import { NavigationType } from "../OnBoarding/Types";
-import { useRetriveUserData } from "../../hooks/useRetriveUserData";
-import { UserContext } from "../../contexts/userContext";
-import { upperText } from "../../utils/upperText";
-import { habits } from "../SignUp/data";
-import { getDays } from "../../utils/dateRecognizer";
 import Habit from "./Habit/Habit";
 import Text from "../../components/Text/Text";
-import { paddingHorizontal } from "../../CONSTANTS";
 import Calendar from "./Calendar/Calendar";
+import { NavigationType } from "../OnBoarding/Types";
+import {
+  useRetriveUserData,
+  UserDataType,
+} from "../../hooks/useRetriveUserData";
+import { useGetHabits } from "../../hooks/useGetHabits";
+import { upperText } from "../../utils/upperText";
+import { getDays } from "../../utils/dateRecognizer";
+import { HabitType } from "../../server/src/controllers/HabitController";
+import { paddingHorizontal } from "../../CONSTANTS";
 
-import { HomeWrapper, HomeHeader, HabitEmoji } from "./Home.style";
-
-export type CalendarType = {
-  date: number;
-  day: string;
-  isCurrentMonth: boolean;
-  isCurrentDay: boolean;
-};
-
-const HabitEmojiSize: number = 23;
+import {
+  HomeWrapper,
+  HomeHeader,
+  HabitEmoji,
+  HabitsWrapper,
+} from "./Home.style";
 
 const Home: FC<NavigationType> = memo(() => {
-  const [userData, setUserData] = useState({});
-  const [habit, setHabit] = useState([]);
-  const [days, setDays] = useState<CalendarType[]>([]);
+  const [userData, setUserData] = useState<UserDataType>({} as UserDataType);
 
-  const { retriveUserData } = useRetriveUserData();
-  const { state } = UserContext();
-
-  const getRandomHabit = useCallback(() => {
-    const userHabits = userData?.habits;
-    const randomIndex = Math.floor(Math.random() * userHabits?.length);
-
-    return habits.find(({ name }) => name === userHabits?.[randomIndex])?.img;
-  }, [userData?.habits]);
+  const { data: UserData, error } = useRetriveUserData();
+  const { data: HabitsData } = useGetHabits();
 
   useEffect(() => {
-    const date = getDays();
-    setDays(date);
-    (async () => {
-      const user = await retriveUserData();
-      setUserData(user);
-    })();
-
-    fetch("http://192.168.100.4:3400/api/habit", {
-      method: "GEt",
-      headers: {
-        "Content-Type": "application/json",
-        authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzAxMDI3NDQxfQ.416vXKVozgVqXopGh4h4tTqa-_nKypt3z4z-5m85F0Q",
-      },
-    })
-      .then((res) => res.json())
-      .then((r) => {
-        setHabit(r.response);
-      })
-      .catch((er) => {
-        console.log(er.response.data);
+    if (error) {
+      Toast.show({
+        type: "error",
+        text1: "Error",
+        text2: error?.message,
       });
-  }, []);
+    }
+    if (UserData) {
+      setUserData(UserData);
+    }
+  }, [error, UserData]);
+
+  const getRandomHabit = (): string => {
+    if (!HabitsData?.length) {
+      return "";
+    }
+    const index = Math.floor(Math.random() * HabitsData?.length);
+    return HabitsData?.map(({ habit_layer }) => habit_layer)?.[index];
+  };
 
   return (
     <HomeWrapper>
@@ -81,45 +68,35 @@ const Home: FC<NavigationType> = memo(() => {
           />
         </View>
         <HabitEmoji>
-          <Image
-            style={{
-              width: HabitEmojiSize,
-              height: HabitEmojiSize,
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: [
-                { translateX: -HabitEmojiSize / 2 },
-                { translateY: -HabitEmojiSize / 2 },
-              ],
-            }}
-            source={getRandomHabit()}
-          />
+          <Text fontSize={5} fontWeight={500} text={getRandomHabit()} />
         </HabitEmoji>
       </HomeHeader>
-      <View style={{ marginTop: 15 }}>
+
+      <View>
         <FlatList
-          data={days}
+          data={getDays()}
           renderItem={({ item }) => <Calendar {...item} />}
-          keyExtractor={(item) => Math.random().toString()}
+          keyExtractor={(_, index) => String(index)}
           horizontal
           showsHorizontalScrollIndicator={false}
         />
       </View>
+
       <View
         style={{
-          paddingHorizontal: paddingHorizontal - 10,
-          marginTop: 30,
-          rowGap: 15,
+          paddingHorizontal: paddingHorizontal,
+          marginTop: Platform.OS === "ios" ? 45 : 30,
+          marginBottom: Platform.OS === "ios" ? 15 : 5,
         }}
       >
         <Text color="black" fontSize={3} text="Habits" fontWeight={700} />
-        <FlatList
-          data={habit}
-          renderItem={({ item }) => <Habit habit={item} />}
-          keyExtractor={(item) => item}
-        />
       </View>
+      <HabitsWrapper>
+        {HabitsData?.map((habit: HabitType) => {
+          return <Habit {...habit} />;
+        })}
+      </HabitsWrapper>
+      <Toast />
     </HomeWrapper>
   );
 });

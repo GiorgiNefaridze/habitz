@@ -1,6 +1,4 @@
-type getFontSizeType = {
-  (size: number): number;
-};
+type getFontSizeType = (size: number) => number;
 
 export const getFontSize: getFontSizeType = (size) => {
   switch (size) {

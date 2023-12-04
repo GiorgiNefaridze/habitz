@@ -1,5 +1,5 @@
 import { useState, memo, Dispatch, SetStateAction, useEffect } from "react";
-import { FlatList, Image } from "react-native";
+import { FlatList, Image, View } from "react-native";
 
 import Text from "../../../components/Text/Text";
 import { genders } from "../data";
@@ -47,21 +47,23 @@ const Genders = memo(
           fontWeight={700}
           text="Choose your gender"
         />
-        <FlatList
-          data={genders}
-          renderItem={({ item }) => (
-            <GenderBox
-              {...item}
-              selectedGender={selectedGender}
-              setSelectedGender={setSelectedGender}
-            />
-          )}
-          keyExtractor={(item) => item.name}
-          numColumns={2}
-          columnWrapperStyle={{
-            justifyContent: "space-between",
-          }}
-        />
+        <View>
+          <FlatList
+            data={genders}
+            renderItem={({ item }) => (
+              <GenderBox
+                {...item}
+                selectedGender={selectedGender}
+                setSelectedGender={setSelectedGender}
+              />
+            )}
+            keyExtractor={(item) => item.name}
+            numColumns={2}
+            columnWrapperStyle={{
+              justifyContent: "space-between",
+            }}
+          />
+        </View>
       </Wrapper>
     );
   }

@@ -3,17 +3,70 @@ const colors = {
   secondary: "#CDCDD0",
 };
 
-const colorsCollection = [
-  "blue",
-  "green",
-  "red",
-  "violet",
-  "white",
-  "grey",
-  "purple",
-  "orange",
-  "black",
-  "pink",
+const paddingHorizontal = 25;
+
+type Habit = {
+  habit: string;
+  icon: string;
+};
+
+const emojiCollection: Habit[] = [
+  {
+    habit: "Exercise",
+    icon: "🏋️‍♂️",
+  },
+  {
+    habit: "Eat",
+    icon: "🍴",
+  },
+  {
+    habit: "Stay Hydrated",
+    icon: "💧",
+  },
+  {
+    habit: "Read",
+    icon: "📕",
+  },
+  {
+    habit: "Sleep",
+    icon: "😴",
+  },
+  {
+    habit: "Run",
+    icon: "🏃🏽‍♂️",
+  },
+  {
+    habit: "Rest",
+    icon: "🛏️",
+  },
+  {
+    habit: "Learn Something",
+    icon: "🎓",
+  },
+  {
+    habit: "Travel and Explore",
+    icon: "🌎",
+  },
+  {
+    habit: "Focus",
+    icon: "🧘🏽",
+  },
+  {
+    habit: "Listening",
+    icon: "🎧",
+  },
+  {
+    habit: "Gaming",
+    icon: "🖥️",
+  },
+  {
+    habit: "Meeting",
+    icon: "🗣️",
+  },
+  {
+    habit: "Beach",
+    icon: "🏖️",
+  },
 ];
 
 const dateIntervals: Record<"value", string>[] = [
@@ -28,6 +81,14 @@ const dateIntervals: Record<"value", string>[] = [
   { value: "Every year" },
 ];
 
-const paddingHorizontal = 25;
+const days: string[] = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
 
-export { dateIntervals, colorsCollection, paddingHorizontal, colors };
+export { dateIntervals, emojiCollection, paddingHorizontal, colors, days };

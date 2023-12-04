@@ -1,17 +1,17 @@
 import { FC, memo } from "react";
-import { Image, Dimensions, View } from "react-native";
+import { Image, View } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faArrowRightToBracket } from "@fortawesome/free-solid-svg-icons";
 
 import Text from "../../components/Text/Text";
 import Button from "../../components/Button/Button";
+import { screenWidth } from "../SignUp/SignUp";
 import { paddingHorizontal } from "../../CONSTANTS";
 import { NavigationType } from "./Types";
 import { Routes } from "../../ROUTES";
 
+import Cover from "../../assets/onBoarding.png";
 import { OnBoardingWrapper } from "./OnBoarding.style";
-
-const screenWidth: number = Dimensions.get("screen").width;
 
 const OnBoarding: FC<NavigationType> = memo(({ navigation: { navigate } }) => {
   const handleNavigate = () => {
@@ -21,7 +21,7 @@ const OnBoarding: FC<NavigationType> = memo(({ navigation: { navigate } }) => {
   return (
     <OnBoardingWrapper>
       <Image
-        source={require("../../assets/onBoarding.png")}
+        source={Cover}
         style={{ width: screenWidth - 2 * paddingHorizontal }}
         resizeMode="contain"
       />

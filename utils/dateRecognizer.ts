@@ -1,33 +1,44 @@
-import { CalendarType } from "../screens/Home/Home";
+import { Platform } from "react-native";
+import { days } from "../CONSTANTS";
 
-let daysArray: CalendarType[] = [];
-let days: string[] = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
+export type CalendarType = {
+  date: number;
+  day: string;
+  isCurrentDay: boolean;
+};
+
 const currentDate = new Date();
 const year: number = currentDate.getFullYear();
 const month: number = currentDate.getMonth();
-const startingdDate: number = +new Date().toLocaleDateString().split("/")[1];
+const currentDay: number = Number(
+  Platform.OS === "ios"
+    ? new Date().toLocaleDateString().split(".")[0]
+    : new Date().toLocaleDateString().split("/")[1]
+);
 
-const getDays = (): CalendarType[] => {
-  for (
-    let i = startingdDate - 1;
-    i <= (startingdDate > 20 ? startingdDate + 10 : startingdDate + 20);
-    i++
-  ) {
-    const date = new Date(year, month, i);
+const getDays = () => {
+  let daysArray: CalendarType[] = [];
+  for (let i = 0; i < 14; i++) {
+    const date = new Date(year, month, currentDay + i);
 
     daysArray.push({
-      date: +date.toLocaleDateString().split("/")[1],
+      date: Number(
+        Platform.OS === "ios"
+          ? date.toLocaleDateString().split(".")[0]
+          : date.toLocaleDateString().split("/")[1]
+      ),
       day: days[date.getDay()],
-      isCurrentDay: +currentDate.toLocaleDateString().split("/")[1] === i,
-      isCurrentMonth: month + 1 === +date?.toLocaleDateString().split("/")[0],
+      isCurrentDay:
+        Number(
+          Platform.OS === "ios"
+            ? currentDate.toLocaleDateString().split(".")[0]
+            : currentDate.toLocaleDateString().split("/")[1]
+        ) ===
+        Number(
+          Platform.OS === "ios"
+            ? date.toLocaleDateString().split(".")[0]
+            : date.toLocaleDateString().split("/")[1]
+        ),
     });
   }
 

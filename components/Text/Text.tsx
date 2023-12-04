@@ -1,5 +1,3 @@
-import { useFonts } from "expo-font";
-
 import { getFontSize } from "../../utils/getFontSize";
 
 import { Heading } from "./Text.style";
@@ -7,10 +5,6 @@ import { Text as TextType } from "./Types";
 
 const Text = (props: TextType) => {
   const { text, shadows, fontSize, style, ...styleProps } = props;
-
-  // const [fontsLoaded] = useFonts({
-  //   Gabarito: require("../../assets/fonts/Gabarito-VariableFont_wght.ttf"),
-  // });
 
   return (
     <Heading
@@ -26,7 +20,6 @@ const Text = (props: TextType) => {
 
           elevation: 1,
         },
-        // fontsLoaded && { fontFamily: "Gabarito" },
       ]}
       {...styleProps}
       {...style}

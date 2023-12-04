@@ -12,6 +12,6 @@ router.get("/", GetHabitsController);
 
 router.post("/", CreateHabitController);
 
-router.delete("/", DeleteHabitController);
+router.delete("/:id", DeleteHabitController);
 
 export default router;

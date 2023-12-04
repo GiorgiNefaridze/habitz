@@ -4,14 +4,11 @@ import { isValid } from "../utils/isValidText";
 import { getUserData } from "../utils/getUserData";
 import { ControllerType } from "../Types";
 
-type HabitType = {
-  name: string;
+export type HabitType = {
   habit_layer: string;
-  goals: string;
-};
-
-type CreateHabitType = HabitType & {
-  user_id: string;
+  habit_name: string;
+  habit_goal: string;
+  habit_id: number;
 };
 
 const GetHabitsController: ControllerType = async (req, res) => {
@@ -20,8 +17,12 @@ const GetHabitsController: ControllerType = async (req, res) => {
 
     const userId = (await getUserData(header))?.user_id;
 
-    const { rows } = await connection.query(
-      "SELECT habit_layer,habit_name,habit_goal FROM habits h JOIN users u ON h.user_id = u.user_id WHERE u.user_id = $1",
+    if (!userId) {
+      throw new Error(errorMessages.userNotExists);
+    }
+
+    const { rows }: { rows: HabitType[] } = await connection.query(
+      "SELECT habit_layer,habit_name,habit_goal,habit_id FROM habits h JOIN users u ON h.user_id = u.user_id WHERE u.user_id = $1",
       [userId]
     );
 
@@ -33,12 +34,12 @@ const GetHabitsController: ControllerType = async (req, res) => {
 
 const CreateHabitController: ControllerType = async (req, res) => {
   try {
-    const { habit_layer, goals, name } = req.body as CreateHabitType;
+    const { habit_layer, habit_goal, habit_name } = req.body;
     const header = req.headers;
 
     const userId = (await getUserData(header))?.user_id;
 
-    if (!isValid([habit_layer, goals, name]) || !userId) {
+    if (!isValid([habit_layer, habit_goal, habit_name]) || !userId) {
       throw new Error(errorMessages.invaliCredentials);
     }
 
@@ -46,7 +47,7 @@ const CreateHabitController: ControllerType = async (req, res) => {
       rows: [habit],
     } = await connection.query(
       "INSERT INTO habits (habit_layer,habit_name,habit_goal,user_id) VALUES ($1,$2,$3,$4) RETURNING *",
-      [habit_layer, name, goals, userId]
+      [habit_layer, habit_name, habit_goal, userId]
     );
 
     if (Object.keys(habit)?.length) {
@@ -61,7 +62,14 @@ const CreateHabitController: ControllerType = async (req, res) => {
 
 const DeleteHabitController: ControllerType = async (req, res) => {
   try {
-  } catch (error) {}
+    const { id } = req.params;
+
+    await connection.query("DELETE FROM habits WHERE habit_id = $1", [id]);
+
+    res.status(200).json({ response: "Habit deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ response: error.message });
+  }
 };
 
 export { GetHabitsController, CreateHabitController, DeleteHabitController };

@@ -1,9 +1,16 @@
-import { Dimensions } from "react-native";
 import styled from "styled-components/native";
 
+import { screenWidth } from "./SignUp";
 import { paddingHorizontal, colors } from "../../CONSTANTS";
 
-const screenWidth: number = Dimensions.get("screen").width;
+export const FormWrapper = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: space-evenly;
+  row-gap: 20;
+  background-color: ${colors.secondary};
+  padding-bottom: 20;
+`;
 
 export const Wrapper = styled.View`
   width: ${screenWidth};

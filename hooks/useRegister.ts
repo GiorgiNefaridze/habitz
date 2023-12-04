@@ -1,39 +1,40 @@
-import { useState } from "react";
+import { useMutation } from "react-query";
+import { isAxiosError } from "axios";
 
-import { BaseUrl } from "../api/ApiBaseUrl";
+import networkClient from "../network";
 
-type RegisterDataType = {
+export type RegisterDtoType = {
   name: string;
   email: string;
   password: string;
   isMale: boolean;
-  habits: string[];
+};
+
+type ResponseType = {
+  response: string;
 };
 
 const useRegister = () => {
-  const [error, setError] = useState("");
-
-  const register = async (data: RegisterDataType) => {
-    const registerDto = {
-      name: data.name,
-      email: data.email,
-      password: data.password,
-      isMale: data.isMale,
-      habits: data.habits,
-    };
-
+  const register = async (registerDto: RegisterDtoType) => {
     try {
       const {
         data: { response },
-      } = await (await BaseUrl()).post("/api/user/register", registerDto);
+      } = await networkClient.post<ResponseType>(
+        "/api/user/register",
+        registerDto
+      );
 
-      return { response };
+      return response;
     } catch (error) {
-      setError(error.response.data.response);
+      if (isAxiosError(error)) {
+        throw new Error(error?.response?.data.response);
+      }
     }
   };
 
-  return { register, error, setError };
+  return useMutation({
+    mutationFn: register,
+  });
 };
 
 export { useRegister };

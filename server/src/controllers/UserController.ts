@@ -10,10 +10,16 @@ import { ControllerType } from "../Types";
 const RetriveUserDataController: ControllerType = async (req, res) => {
   try {
     const header = req.headers;
-
     const user = await getUserData(header);
 
-    res.status(200).json({ response: user });
+    const {
+      rows: [userData],
+    } = await connection.query(
+      "SELECT u.user_name FROM users u WHERE u.user_id = $1",
+      [user?.user_id]
+    );
+
+    res.status(200).json({ response: userData });
   } catch (error) {
     res.status(500).json({ response: error.message });
   }
@@ -21,9 +27,9 @@ const RetriveUserDataController: ControllerType = async (req, res) => {
 
 const RegisterController: ControllerType = async (req, res) => {
   try {
-    const { name, email, password, isMale, habits } = req.body;
+    const { name, email, password, isMale } = req.body;
 
-    if (!isValid([name, email, password]) || habits?.length < 1) {
+    if (!isValid([name, email, password])) {
       throw new Error(errorMessages.invaliCredentials);
     }
 

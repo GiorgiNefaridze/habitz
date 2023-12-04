@@ -3,12 +3,7 @@ import styled from "styled-components/native";
 import { screenWidth } from "../SignUp/SignUp";
 import { colors, paddingHorizontal } from "../../CONSTANTS";
 
-type ColorType = {
-  color: string;
-  align?: boolean;
-};
-
-export const AddHabitWrapper = styled.View`
+export const CreateHabitWrapper = styled.View`
   flex: 1;
   background-color: ${colors.secondary};
 `;
@@ -39,7 +34,7 @@ export const HabitBody = styled.View`
   margin-bottom: ${paddingHorizontal};
 `;
 
-export const ColorPickerWrapper = styled.TouchableOpacity`
+export const HabitEmojipickerWrapper = styled.TouchableOpacity`
   width: ${screenWidth - 2 * paddingHorizontal};
   height: 65;
   background-color: white;
@@ -53,28 +48,16 @@ export const ColorPickerWrapper = styled.TouchableOpacity`
   justify-content: flex-start;
   padding-left: 10;
   padding-right: 10;
-  column-gap: 10;
 `;
 
-export const Color = styled.TouchableOpacity<ColorType>`
-  width: 50;
-  height: 50;
-  background-color: ${({ color }) => color ?? "black"};
-  border-top-right-radius: 10;
-  border-top-left-radius: 10;
-  border-bottom-right-radius: 10;
-  border-bottom-left-radius: 10;
-`;
-
-export const ChooseColor = styled.TouchableOpacity<ColorType>`
+export const SelectIcon = styled.TouchableOpacity<{ isList: boolean }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 60;
   height: 53;
-  background-color: ${({ color }) => color ?? "black"};
-  align-self: ${({ align }) => (align ? "center" : "inherit")};
   margin-left: 10;
   margin-right: 10;
-  margin-top: ${({ align }) => (align ? paddingHorizontal : "0")};
-  margin-bottom: ${({ align }) => (align ? paddingHorizontal : "10")};
   border-top-right-radius: 15;
   border-top-left-radius: 15;
   border-bottom-right-radius: 15;
@@ -82,6 +65,7 @@ export const ChooseColor = styled.TouchableOpacity<ColorType>`
   border-width: 1px;
   border-color: grey;
   border-style: solid;
+  margin-bottom: ${({ isList }) => (isList ? 15 : 0)};
 `;
 
 export const BottomSheetContent = styled.View`
@@ -89,4 +73,5 @@ export const BottomSheetContent = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  padding-top: 70;
 `;

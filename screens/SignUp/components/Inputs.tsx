@@ -1,11 +1,6 @@
 import { Dispatch, SetStateAction, memo } from "react";
-import { View, Dimensions } from "react-native";
 
-import Input from "../../../components/Input/Input";
-import Text from "../../../components/Text/Text";
-import { paddingHorizontal } from "../../../CONSTANTS";
-
-const screenWidth: number = Dimensions.get("screen").width;
+import InputLabel from "../../../components/InputLabel";
 
 type InputsType = {
   name: string;
@@ -16,52 +11,36 @@ type InputsType = {
   setPassword: Dispatch<SetStateAction<string>>;
 };
 
-const Inputs = memo(
-  ({ email, name, password, setEmail, setName, setPassword }: InputsType) => {
-    return (
-      <>
-        <View>
-          <Text text="Name" color="black" fontSize={5} fontWeight={700} />
-          <Input
-            width={screenWidth - 2 * paddingHorizontal}
-            padding={10}
-            placeholderTextColor="grey"
-            secure={false}
-            type="default"
-            placeholder="Enter your name"
-            onChange={setName}
-            value={name}
-          />
-        </View>
-        <View>
-          <Text text="Email" color="black" fontSize={5} fontWeight={700} />
-          <Input
-            width={screenWidth - 2 * paddingHorizontal}
-            padding={10}
-            placeholderTextColor="grey"
-            secure={false}
-            type="email-address"
-            placeholder="Enter your email address"
-            onChange={setEmail}
-            value={email}
-          />
-        </View>
-        <View>
-          <Text text="Password" color="black" fontSize={5} fontWeight={700} />
-          <Input
-            width={screenWidth - 2 * paddingHorizontal}
-            padding={10}
-            placeholderTextColor="grey"
-            secure
-            type="default"
-            placeholder="Enter your password"
-            onChange={setPassword}
-            value={password}
-          />
-        </View>
-      </>
-    );
-  }
-);
+const Inputs = memo((props: InputsType) => {
+  const { email, name, password, setEmail, setName, setPassword } = props;
+  return (
+    <>
+      <InputLabel
+        label="Name"
+        placeholder="Enter your name"
+        secure={false}
+        type="default"
+        value={name}
+        valueSetter={setName}
+      />
+      <InputLabel
+        label="Email"
+        placeholder="Enter your email address"
+        secure={false}
+        type="email-address"
+        value={email}
+        valueSetter={setEmail}
+      />
+      <InputLabel
+        label="Password"
+        placeholder="Enter your password"
+        secure={true}
+        type="default"
+        value={password}
+        valueSetter={setPassword}
+      />
+    </>
+  );
+});
 
 export default Inputs;

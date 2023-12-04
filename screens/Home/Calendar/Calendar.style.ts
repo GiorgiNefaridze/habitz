@@ -4,7 +4,6 @@ import { colors } from "../../../CONSTANTS";
 
 type PropType = {
   currentDay: boolean;
-  currentMonth: boolean;
 };
 
 export const DateBlock = styled.TouchableOpacity<PropType>`
@@ -13,8 +12,7 @@ export const DateBlock = styled.TouchableOpacity<PropType>`
   justify-content: center;
   align-items: center;
   row-gap: 10;
-  background-color: ${({ currentMonth }) =>
-    currentMonth ? "white" : "#EAECF0"};
+  background-color: white;
   padding-top: 10;
   padding-bottom: 10;
   padding-right: 11;

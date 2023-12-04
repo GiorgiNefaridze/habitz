@@ -1,19 +1,22 @@
-import { useState } from "react";
+import { isAxiosError } from "axios";
+import { useMutation } from "react-query";
 
+import networkClient from "../network";
 import { UserContext } from "../contexts/userContext";
-import { BaseUrl } from "../api/ApiBaseUrl";
 
-type LoginDataType = {
+type LoginType = {
   email: string;
   password: string;
 };
 
+type ResponseType = {
+  name: string;
+  token: string;
+};
+
 const useLogin = () => {
-  const [error, setError] = useState("");
-
   const { dispatch } = UserContext();
-
-  const login = async (data: LoginDataType) => {
+  const login = async (data: LoginType) => {
     const loginDto = {
       email: data.email,
       password: data.password,
@@ -22,16 +25,20 @@ const useLogin = () => {
     try {
       const {
         data: { name, token },
-      } = await (await BaseUrl()).post("/api/user/login", loginDto);
+      } = await networkClient.post<ResponseType>("/api/user/login", loginDto);
+      dispatch({ type: "LOGIN", payload: { token } });
 
-      dispatch({ type: "LOGIN", payload: { name, token } });
       return { name, token };
     } catch (error) {
-      setError(error.response.data.response);
+      if (isAxiosError(error)) {
+        throw new Error(error?.response?.data.response);
+      }
     }
   };
 
-  return { login, error, setError };
+  return useMutation({
+    mutationFn: login,
+  });
 };
 
 export { useLogin };

@@ -1,6 +1,15 @@
 import styled from "styled-components/native";
 
-import { paddingHorizontal } from "../../CONSTANTS";
+import { colors, paddingHorizontal } from "../../CONSTANTS";
+
+export const FormWrapper = styled.SafeAreaView`
+  flex: 1;
+  align-items: center;
+  justify-content: space-evenly;
+  row-gap: 20;
+  background-color: ${colors.secondary};
+  padding-bottom: 20;
+`;
 
 export const FormHeader = styled.View<{ width: number }>`
   flex-direction: row;

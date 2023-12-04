@@ -1,15 +1,16 @@
+import { ReactNode } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import { Routes } from "../ROUTES";
 
 const Stack = createStackNavigator();
 
-type StackScreens = { path: string; component: JSX.Element };
+type StackScreens = { path: string; component: ReactNode };
 
 const StackNavigation = () => {
   return (
     <Stack.Navigator
-      initialRouteName={Routes.AddHabit.path}
+      initialRouteName={Routes.OnBoarding.path}
       screenOptions={{ header: () => null }}
     >
       {Object.values(Routes).map(

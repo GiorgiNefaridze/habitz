@@ -1,8 +1,13 @@
 import styled from "styled-components/native";
 
-export const HabitElement = styled.TouchableOpacity`
-  flex: 1;
+type PropType = {
+  isPressed: boolean;
+};
+
+export const HabitElement = styled.TouchableOpacity<PropType>`
+  height: 60;
   flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   column-gap: 10;
   margin-bottom: 15;
@@ -13,7 +18,13 @@ export const HabitElement = styled.TouchableOpacity`
   padding-top: 10;
   padding-bottom: 10;
   padding-left: 10;
+  padding-right: 15;
   border-width: 1px;
   border-color: #9b9ba1;
-  background-color: white;
+  background-color: ${({ isPressed }) => (isPressed ? "red" : "#ededed")};
+`;
+
+export const HabitElementContent = styled.TouchableOpacity`
+  flex-direction: row;
+  column-gap: 10;
 `;
