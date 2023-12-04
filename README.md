@@ -1,6 +1,6 @@
-### **Habitz** - cross platform application, which helps users to manage their habits.
+### **Habitz** - cross platform application, which helps users to manage their habits 🥴.
 
-<div style="width:300px">
+<div style="width:200px">
  <img src="./assets/icon.png" />
 </div>
 
@@ -25,14 +25,12 @@ Then start the expo app with `npm start` ,scan QR code from your device and enjo
 #### 🏭 Start server side (Node JS)
 
 Change directory and start the back-end `cd server && npm start`. Then follow `.env.example` file,create `.env` ,add your own variables and set up postgre sql connection.Copy database && tables schema to set up db properly.
+Check : 
 
 ```sql
-check ---> database.sql
+database.sql
 ```
+
 📸**snapshot**
 
-<div style="width:300px">
- <video controls>
-     <source src="./assets/RPReplay_Final1701705271.mp4" type="video/mp4">
- </video>
-</div>
+<video src="./assets/RPReplay_Final1701705271.mp4" width="180" />
